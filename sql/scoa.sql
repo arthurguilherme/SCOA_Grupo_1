@@ -42,6 +42,60 @@ LOCK TABLES `aluno` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `aluno_turma`
+--
+
+DROP TABLE IF EXISTS `aluno_turma`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `aluno_turma` (
+  `cod_turma` int(11) NOT NULL,
+  `matricula_aluno` int(11) NOT NULL,
+  `faltas` int(11) NOT NULL DEFAULT '0',
+  `grau` int(11) DEFAULT '0',
+  `situacao` char(2) DEFAULT NULL,
+  PRIMARY KEY (`cod_turma`,`matricula_aluno`),
+  KEY `presenca_FK_1` (`matricula_aluno`),
+  CONSTRAINT `presenca_FK` FOREIGN KEY (`cod_turma`) REFERENCES `turma` (`codigo`),
+  CONSTRAINT `presenca_FK_1` FOREIGN KEY (`matricula_aluno`) REFERENCES `aluno` (`matricula`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `aluno_turma`
+--
+
+LOCK TABLES `aluno_turma` WRITE;
+/*!40000 ALTER TABLE `aluno_turma` DISABLE KEYS */;
+/*!40000 ALTER TABLE `aluno_turma` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `avaliacao`
+--
+
+DROP TABLE IF EXISTS `avaliacao`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `avaliacao` (
+  `codigo` varchar(2) NOT NULL,
+  `cod_turma` int(11) NOT NULL,
+  PRIMARY KEY (`codigo`,`cod_turma`),
+  KEY `avaliacao_FK` (`cod_turma`),
+  CONSTRAINT `avaliacao_FK` FOREIGN KEY (`cod_turma`) REFERENCES `turma` (`codigo`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `avaliacao`
+--
+
+LOCK TABLES `avaliacao` WRITE;
+/*!40000 ALTER TABLE `avaliacao` DISABLE KEYS */;
+/*!40000 ALTER TABLE `avaliacao` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `disciplina`
 --
 
@@ -53,6 +107,7 @@ CREATE TABLE `disciplina` (
   `nome` varchar(100) NOT NULL,
   `carga` int(11) NOT NULL,
   `curso` char(2) NOT NULL,
+  `periodo` int(11) NOT NULL,
   PRIMARY KEY (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -64,6 +119,91 @@ CREATE TABLE `disciplina` (
 LOCK TABLES `disciplina` WRITE;
 /*!40000 ALTER TABLE `disciplina` DISABLE KEYS */;
 /*!40000 ALTER TABLE `disciplina` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `espera`
+--
+
+DROP TABLE IF EXISTS `espera`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `espera` (
+  `cod_turma` int(11) NOT NULL,
+  `cod_disciplina` char(6) NOT NULL,
+  `matricula` int(11) NOT NULL,
+  PRIMARY KEY (`cod_turma`,`cod_disciplina`,`matricula`),
+  KEY `espera_FK` (`matricula`),
+  KEY `espera_FK_1` (`cod_disciplina`),
+  CONSTRAINT `espera_FK` FOREIGN KEY (`matricula`) REFERENCES `aluno` (`matricula`),
+  CONSTRAINT `espera_FK_1` FOREIGN KEY (`cod_disciplina`) REFERENCES `disciplina` (`codigo`),
+  CONSTRAINT `espera_FK_2` FOREIGN KEY (`cod_turma`) REFERENCES `turma` (`codigo`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `espera`
+--
+
+LOCK TABLES `espera` WRITE;
+/*!40000 ALTER TABLE `espera` DISABLE KEYS */;
+/*!40000 ALTER TABLE `espera` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `historico_disciplina`
+--
+
+DROP TABLE IF EXISTS `historico_disciplina`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `historico_disciplina` (
+  `matricula` int(11) NOT NULL,
+  `cod_disciplina` char(6) NOT NULL,
+  `presenca` int(11) NOT NULL,
+  `grau` int(11) NOT NULL,
+  PRIMARY KEY (`matricula`,`cod_disciplina`),
+  KEY `historico_disciplina_FK_1` (`cod_disciplina`),
+  CONSTRAINT `historico_disciplina_FK` FOREIGN KEY (`matricula`) REFERENCES `aluno` (`matricula`),
+  CONSTRAINT `historico_disciplina_FK_1` FOREIGN KEY (`cod_disciplina`) REFERENCES `disciplina` (`codigo`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `historico_disciplina`
+--
+
+LOCK TABLES `historico_disciplina` WRITE;
+/*!40000 ALTER TABLE `historico_disciplina` DISABLE KEYS */;
+/*!40000 ALTER TABLE `historico_disciplina` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `nota_avaliacao`
+--
+
+DROP TABLE IF EXISTS `nota_avaliacao`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `nota_avaliacao` (
+  `cod_avaliacao` varchar(2) NOT NULL,
+  `cod_turma` int(11) NOT NULL,
+  `matricula` int(11) NOT NULL,
+  `nota` int(11) NOT NULL,
+  PRIMARY KEY (`cod_avaliacao`,`cod_turma`,`matricula`),
+  KEY `nota_avaliacao_FK` (`matricula`),
+  CONSTRAINT `nota_avaliacao_FK` FOREIGN KEY (`matricula`) REFERENCES `aluno` (`matricula`),
+  CONSTRAINT `nota_avaliacao_FK_1` FOREIGN KEY (`cod_avaliacao`, `cod_turma`) REFERENCES `avaliacao` (`codigo`, `cod_turma`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `nota_avaliacao`
+--
+
+LOCK TABLES `nota_avaliacao` WRITE;
+/*!40000 ALTER TABLE `nota_avaliacao` DISABLE KEYS */;
+/*!40000 ALTER TABLE `nota_avaliacao` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -100,7 +240,9 @@ DROP TABLE IF EXISTS `professor`;
 CREATE TABLE `professor` (
   `cpf` char(11) NOT NULL,
   `nome` varchar(200) NOT NULL,
-  PRIMARY KEY (`cpf`),
+  `matricula` int(11) NOT NULL,
+  PRIMARY KEY (`matricula`),
+  KEY `professor_FK` (`cpf`),
   CONSTRAINT `professor_FK` FOREIGN KEY (`cpf`) REFERENCES `pessoa` (`cpf`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -199,9 +341,12 @@ CREATE TABLE `turma` (
   `codigo` int(11) NOT NULL AUTO_INCREMENT,
   `cod_disciplina` char(6) NOT NULL,
   `vagas` int(11) NOT NULL,
+  `matricula_professor` int(11) DEFAULT NULL,
   PRIMARY KEY (`codigo`),
   KEY `turma_FK` (`cod_disciplina`),
-  CONSTRAINT `turma_FK` FOREIGN KEY (`cod_disciplina`) REFERENCES `disciplina` (`codigo`)
+  KEY `turma_FK_1` (`matricula_professor`),
+  CONSTRAINT `turma_FK` FOREIGN KEY (`cod_disciplina`) REFERENCES `disciplina` (`codigo`),
+  CONSTRAINT `turma_FK_1` FOREIGN KEY (`matricula_professor`) REFERENCES `professor` (`matricula`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -256,4 +401,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-09-18 19:06:34
+-- Dump completed on 2019-09-23  9:24:25
