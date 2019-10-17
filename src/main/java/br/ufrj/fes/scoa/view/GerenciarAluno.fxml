@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrj.fes.scoa.controller.GerenciarAlunoController">
+   <children>
+      <TableView fx:id="tabela" prefHeight="392.0" prefWidth="600.0">
+        <columns>
+          <TableColumn fx:id="matriculaCol" prefWidth="96.0" text="Matrícula" />
+          <TableColumn fx:id="cpfCol" prefWidth="114.0" text="CPF" />
+            <TableColumn fx:id="rgCol" prefWidth="160.0" text="RG" />
+          <TableColumn fx:id="nomeCol" prefWidth="303.0" text="Nome" />
+          <TableColumn fx:id="cursoCol" prefWidth="161.0" text="Curso" />
+          <TableColumn fx:id="situacaoCol" minWidth="0.0" prefWidth="167.0" text="Situação" />
+        </columns>
+      </TableView>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5">
+         <children>
+            <Button mnemonicParsing="false" onAction="#abrirAdicionarAlunoWindow" text="Adicionar">
+             </Button>
+            <Button fx:id="editar" mnemonicParsing="false" onAction="#editarAluno" text="Editar" />
+            <Button fx:id="remover" mnemonicParsing="false" onAction="#removerAluno" text="Remover" />
+         </children>
+      </HBox>
+   </children>
+</VBox>

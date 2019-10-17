@@ -22,7 +22,7 @@ public class CursoDAO {
 			
 			while (rs.next()) {
 				String codigo = rs.getString("codigo");
-				cursos.add(new Curso(codigo));
+				cursos.add(new Curso(codigo, rs.getString("nome")));
 			}
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block

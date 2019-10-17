@@ -76,7 +76,7 @@ public class App extends Application {
         } catch (Exception ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
-        verificarConexao();
+        //verificarConexao();
     }
 
     private Initializable replaceSceneContent(String fxml) throws Exception {

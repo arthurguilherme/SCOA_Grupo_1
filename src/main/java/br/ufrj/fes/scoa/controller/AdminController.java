@@ -35,13 +35,13 @@ public class AdminController extends AnchorPane implements Initializable {
 	}
 
 	@FXML
-	public void abrirAlunoCadastro(ActionEvent event) {
+	public void gerenciarAluno(ActionEvent event) {
 		Stage stage = new Stage();	    
 		try {
 			Parent root = FXMLLoader.load(
-			    App.class.getResource("/CadastrarAluno.fxml"));
+			    App.class.getResource("/GerenciarAluno.fxml"));
 			stage.setScene(new Scene(root));
-		    stage.setTitle("Cadastrar Aluno");
+		    stage.setTitle("Gerenciar Aluno");
 		    stage.initModality(Modality.WINDOW_MODAL);
 		    stage.initOwner(
 		        ((Node)event.getSource()).getScene().getWindow() );

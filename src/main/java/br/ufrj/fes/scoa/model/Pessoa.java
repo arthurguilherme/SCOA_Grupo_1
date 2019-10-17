@@ -3,12 +3,13 @@ package br.ufrj.fes.scoa.model;
 import br.ufrj.fes.scoa.util.StringUtils;
 
 public class Pessoa {
+	private int id;
 	private String cpf;
 	private String rg;
 	private String nome;
 	
 	// TODO verificar cpf
-	public Pessoa(String nome, String cpf, String rg) throws Exception {
+	public Pessoa(int id, String nome, String cpf, String rg) throws Exception {
 		if (StringUtils.isNullOrEmpty(nome) ||
 				StringUtils.isNullOrEmpty(cpf) || 
 				StringUtils.isNullOrEmpty(rg)) {
@@ -17,6 +18,7 @@ public class Pessoa {
 		this.cpf = cpf;
 		this.nome = nome;
 		this.rg = rg;
+		this.id = id;
 	}
 	
 	public String getCpf() {
@@ -29,5 +31,9 @@ public class Pessoa {
 
 	public String getNome() {
 		return nome;
+	}
+	
+	public int getId() {
+		return id;
 	}
 }
