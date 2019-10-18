@@ -28,6 +28,8 @@ public class EditarAlunoController implements Initializable {
 	@FXML
 	private ChoiceBox<Curso> cursos;
 	
+	private String oldCpf;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
@@ -40,6 +42,7 @@ public class EditarAlunoController implements Initializable {
 		matricula.setText(Integer.toString(aluno.getMatricula()));
 		nome.setText(aluno.getNome());
 		cpf.setText(aluno.getCpf());
+		oldCpf = aluno.getCpf();
 		rg.setText(aluno.getRg());		
 		cursos.getSelectionModel().select(aluno.getCurso());
 	}
@@ -53,7 +56,7 @@ public class EditarAlunoController implements Initializable {
 		Aluno aluno;
 		try {					
 			aluno = new Aluno(nomeAluno,cpfAluno, rgAluno, cursoAluno);
-			AlunoDAO.atualizar(aluno);
+			AlunoDAO.atualizar(oldCpf, aluno);
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Atualizado com sucesso");
 			alert.setHeaderText(null);

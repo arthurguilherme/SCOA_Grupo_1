@@ -36,19 +36,28 @@ public class AlunoDAO {
 			
 	}
 	
-	public static void atualizar(Aluno aluno) throws Exception {
-		String query = "UPDATE pessoa as p INNER JOIN aluno as a ON a.cpf_pessoa = p.cpf" + 
-				" SET p.cpf = ?, p.nome = ?, p.rg = ?, a.curso = ?" + 
-				 "WHERE p.cpf = ?";
+	public static void atualizar(String oldCpf, Aluno aluno) throws Exception {
+		String query = "UPDATE pessoa SET cpf = ?, nome = ?, rg = ? WHERE cpf = ?";
+		String query2 = "UPDATE aluno SET curso = ? WHERE cpf_pessoa = ?";
+		PreparedStatement ps2 = null;
 		try (Connection conexao = ConexaoFactory.criarConexao();
 			PreparedStatement ps = conexao.prepareStatement(query)) {
 				ps.setString(1, aluno.getCpf());
 				ps.setString(2, aluno.getNome());
 				ps.setString(3, aluno.getRg());
-				ps.setString(4, aluno.getCurso().getCodigo());
-				//ps.setString(5,  aluno.getSituacao());
-				ps.setString(5, aluno.getCpf());
+				ps.setString(4, oldCpf);
 				ps.execute();
+				
+				ps2 = conexao.prepareStatement(query2);
+				ps2.setString(1, aluno.getCurso().getCodigo());
+				ps2.setString(2,  aluno.getCpf());	
+				ps2.execute();
+			} finally {
+				if (ps2 != null) {
+					try {
+						ps2.close();
+					} catch (Exception e) {}
+				}
 			}
 	}
 	
