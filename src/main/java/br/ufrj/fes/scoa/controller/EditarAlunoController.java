@@ -18,8 +18,6 @@ import javafx.stage.Stage;
 
 public class EditarAlunoController implements Initializable {
 	@FXML
-	private TextField id;
-	@FXML
 	private TextField matricula;
 	@FXML
 	private TextField nome;
@@ -36,11 +34,9 @@ public class EditarAlunoController implements Initializable {
 		cursos.getItems().addAll(CursoDAO.getCursos());
 		//cursos.getSelectionModel().selectFirst();
 		matricula.setDisable(true);		
-		id.setDisable(true);
 	}	
 	
 	public void initEditarAluno(Aluno aluno) {	
-		id.setText(Integer.toString(aluno.getId()));
 		matricula.setText(Integer.toString(aluno.getMatricula()));
 		nome.setText(aluno.getNome());
 		cpf.setText(aluno.getCpf());
@@ -56,7 +52,7 @@ public class EditarAlunoController implements Initializable {
 		Curso cursoAluno = cursos.getValue();
 		Aluno aluno;
 		try {					
-			aluno = new Aluno(Integer.parseInt(id.getText()), nomeAluno,cpfAluno, rgAluno, cursoAluno);
+			aluno = new Aluno(nomeAluno,cpfAluno, rgAluno, cursoAluno);
 			AlunoDAO.atualizar(aluno);
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Atualizado com sucesso");

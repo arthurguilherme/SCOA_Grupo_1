@@ -15,7 +15,7 @@ import br.ufrj.fes.scoa.ConexaoFactory;
 public class CursoDAO {	
 	public static List<Curso> getCursos() {
 		List<Curso> cursos = new ArrayList<>();
-		String query = "SELECT * FROM curso2";
+		String query = "SELECT * FROM curso";
 		try (Connection conexao = ConexaoFactory.criarConexao();
 			Statement st = conexao.createStatement();
 			ResultSet rs = st.executeQuery(query)){

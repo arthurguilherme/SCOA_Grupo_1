@@ -5,14 +5,14 @@ public class Aluno extends Pessoa {
 	private String situacao;
 	private Curso curso;
 	
-	public Aluno(int id, String nome, String cpf, String rg, Curso curso) throws Exception {
-		super(id, nome, cpf, rg);	
+	public Aluno(String nome, String cpf, String rg, Curso curso) throws Exception {
+		super(nome, cpf, rg);	
 		matricula = -1;
 		setCurso(curso);
 	}	
 	
-	public Aluno(int id, int matricula, String situacao, String nome, String cpf, String rg, Curso curso) throws Exception {
-		this(id, nome, cpf, rg, curso);		
+	public Aluno(int matricula, String situacao, String nome, String cpf, String rg, Curso curso) throws Exception {
+		this(nome, cpf, rg, curso);		
 		this.matricula = matricula;
 		this.situacao = situacao;
 	}

@@ -38,7 +38,7 @@ public class CadastrarAlunoController implements Initializable {
 		Curso cursoAluno = cursos.getValue();
 		Aluno aluno;
 		try {					
-			aluno = new Aluno(-1, nomeAluno,cpfAluno, rgAluno, cursoAluno);
+			aluno = new Aluno(nomeAluno,cpfAluno, rgAluno, cursoAluno);
 			AlunoDAO.cadastrar(aluno);
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Cadastrado com sucesso");
