@@ -14,9 +14,9 @@ import br.ufrj.fes.scoa.ConexaoFactory;
 public class AlunoDAO {
 	public static List<Aluno> getAlunos() {
 		String query = "SELECT p.id, a.matricula, p.nome, p.cpf, p.rg, "
-				+ "a.situacao, c.codigo, c.nome as curso_nome FROM pessoa as p "
-				+ "INNER JOIN aluno as a ON p.id = a.id "
-				+ "INNER JOIN curso as c ON c.codigo = a.curso";
+				+ "a.situacao, c.codigo, c.nome as curso_nome FROM pessoa2 as p "
+				+ "INNER JOIN aluno2 as a ON p.id = a.id "
+				+ "INNER JOIN curso2 as c ON c.codigo = a.curso";
 		List<Aluno> alunos = new ArrayList<>();
 		try (Connection conexao = ConexaoFactory.criarConexao();
 			PreparedStatement ps = conexao.prepareStatement(query);
@@ -36,7 +36,7 @@ public class AlunoDAO {
 	}
 	
 	public static void atualizar(Aluno aluno) throws Exception {
-		String query = "UPDATE pessoa as p INNER JOIN aluno as a ON a.id = p.id" + 
+		String query = "UPDATE pessoa2 as p INNER JOIN aluno2 as a ON a.id = p.id" + 
 				" SET p.cpf = ?, p.nome = ?, p.rg = ?, a.curso = ?" + 
 				 "WHERE p.id = ?";
 		try (Connection conexao = ConexaoFactory.criarConexao();
@@ -52,7 +52,7 @@ public class AlunoDAO {
 	}
 	
 	public static void remover(Aluno aluno) throws Exception {
-		String query = "DELETE FROM pessoa WHERE id = ?";
+		String query = "DELETE FROM pessoa2 WHERE id = ?";
 		try (Connection conexao = ConexaoFactory.criarConexao();
 				PreparedStatement ps = conexao.prepareStatement(query)) {				
 					ps.setInt(1, aluno.getId());
@@ -68,7 +68,7 @@ public class AlunoDAO {
 		//CallableStatement cs = null;
 		try {
 			conexao = ConexaoFactory.criarConexao();
-			ps = conexao.prepareStatement("SELECT 1 FROM pessoa WHERE cpf = ?");			
+			ps = conexao.prepareStatement("SELECT 1 FROM pessoa2 WHERE cpf = ?");			
 			ps.setString(1, aluno.getCpf());
 			ResultSet rs = ps.executeQuery();
 
@@ -76,7 +76,7 @@ public class AlunoDAO {
 				throw new Exception("Aluno já cadastrado!");
 			}
 			
-			ps2 = conexao.prepareStatement("INSERT INTO pessoa (cpf, rg, nome) VALUES (?, ?, ?)", 
+			ps2 = conexao.prepareStatement("INSERT INTO pessoa2 (cpf, rg, nome) VALUES (?, ?, ?)", 
 					Statement.RETURN_GENERATED_KEYS);
 			ps2.setString(1, aluno.getCpf());
 			ps2.setString(2, aluno.getRg());
@@ -87,7 +87,7 @@ public class AlunoDAO {
 			 
 			keys.next();
 			int key = keys.getInt(1);
-			ps3 = conexao.prepareStatement("INSERT INTO aluno (id, curso) VALUES (?, ?)");
+			ps3 = conexao.prepareStatement("INSERT INTO aluno2 (id, curso) VALUES (?, ?)");
 			ps3.setInt(1, key);
 			ps3.setString(2, aluno.getCurso().getCodigo());
 			ps3.execute();
