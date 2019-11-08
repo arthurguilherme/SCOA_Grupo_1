@@ -19,6 +19,7 @@
                 <Button mnemonicParsing="false" onAction="#gerenciarAluno" prefHeight="26.0" prefWidth="135.0" text="Gerenciar Alunos" />
             <Button mnemonicParsing="false" onAction="#gerenciarCurso" prefHeight="26.0" prefWidth="135.0" text="Gerenciar Curso" />
             <Button mnemonicParsing="false" onAction="#gerenciarDisciplina" prefHeight="26.0" prefWidth="135.0" text="Gerenciar Disciplina" />
+            <Button mnemonicParsing="false" onAction="#gerenciarProfessor" prefHeight="26.0" prefWidth="135.0" text="Gerenciar Professor" />
                 <Button mnemonicParsing="false" onAction="#deslogar" prefHeight="26.0" prefWidth="135.0" text="Deslogar" />
          </children>
       </VBox>

@@ -91,4 +91,26 @@ public class AdminController extends AnchorPane implements Initializable {
 			e.printStackTrace();
 		}	    
 	}
+	
+	@FXML
+	public void gerenciarProfessor(ActionEvent event) {
+		Stage stage = new Stage();	    
+		try {
+			Parent root = FXMLLoader.load(
+			    App.class.getResource("/GerenciarProfessor.fxml"));
+			stage.setScene(new Scene(root));
+		    stage.setTitle("Gerenciar Professor");
+		    stage.initModality(Modality.WINDOW_MODAL);
+		    stage.initOwner(
+		        ((Node)event.getSource()).getScene().getWindow() );
+		    stage.show();
+			/*
+			 * root = FXMLLoader.load( App.class.getResource("/GerenciarDisciplina.fxml"));
+			 * stage.setScene(new Scene(root)); stage.show();
+			 */
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	    
+	}
 }
