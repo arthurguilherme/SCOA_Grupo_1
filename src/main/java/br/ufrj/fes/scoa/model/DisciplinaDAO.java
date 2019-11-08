@@ -82,7 +82,7 @@ public class DisciplinaDAO {
 			ps.setString(1, curso.getCodigo());			
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				disciplinas.add(new Disciplina(rs.getString("codigo"), rs.getString("nome")));
+				disciplinas.add(new Disciplina(rs.getString("codigo"), rs.getString("nome"), curso, rs.getInt("carga"), rs.getInt("periodo")));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

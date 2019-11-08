@@ -50,7 +50,7 @@ public class AlunoDAO {
 				
 				ps2 = conexao.prepareStatement(query2);
 				ps2.setString(1, aluno.getCurso().getCodigo());
-				ps2.setString(2,  aluno.getCpf());	
+				ps2.setString(2, aluno.getCpf());	
 				ps2.execute();
 			} finally {
 				if (ps2 != null) {
