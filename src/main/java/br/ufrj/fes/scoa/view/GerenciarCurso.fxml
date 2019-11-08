@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrj.fes.scoa.controller.GerenciarCursoController">
+   <children>
+      <TableView fx:id="tabela" prefHeight="392.0" prefWidth="600.0">
+        <columns>        
+          <TableColumn fx:id="codCol" prefWidth="361.0" text="Código" />
+          <TableColumn fx:id="nomeCol" minWidth="0.0" prefWidth="509.0" text="Nome" />          
+        </columns>
+      </TableView>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5">
+         <children>
+            <Button mnemonicParsing="false" onAction="#adicionar" text="Adicionar">
+             </Button>
+            <Button fx:id="editar" onAction="#editar" mnemonicParsing="false" text="Editar" />
+            <Button fx:id="remover" onAction="#remover" mnemonicParsing="false" text="Remover" />
+         </children>
+      </HBox>
+   </children>
+</VBox>

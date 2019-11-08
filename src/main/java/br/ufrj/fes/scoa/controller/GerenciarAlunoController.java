@@ -51,6 +51,7 @@ public class GerenciarAlunoController implements Initializable {
    	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
+   		System.out.println("iniciando 2");
 		cpfCol.setCellValueFactory(new PropertyValueFactory<Aluno, String>("cpf"));
 		rgCol.setCellValueFactory(new PropertyValueFactory<Aluno, String>("rg"));
 		nomeCol.setCellValueFactory(new PropertyValueFactory<Aluno, String>("nome"));

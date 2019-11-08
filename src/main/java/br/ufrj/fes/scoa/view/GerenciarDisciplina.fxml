@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrj.fes.scoa.controller.GerenciarDisciplinaController">
+   <children>
+      <TableView fx:id="tabela" prefHeight="392.0" prefWidth="600.0">
+        <columns>        
+          <TableColumn fx:id="codCol" prefWidth="108.0" text="Código" />
+          <TableColumn fx:id="nomeCol" minWidth="0.0" prefWidth="214.0" text="Nome" />
+            <!---<TableColumn fx:id="cursoCol" prefWidth="265.0" text="Curso" />-->
+            <TableColumn fx:id="cargaCol" prefWidth="145.0" text="Carga Horária" />
+            <TableColumn fx:id="periodoCol" minWidth="0.0" prefWidth="267.0" text="Período" />          
+        </columns>
+      </TableView>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5">
+         <children>
+            <Button fx:id="adicionar" onAction="#adicionar" mnemonicParsing="false" text="Adicionar">
+             </Button>
+            <Button fx:id="editar" mnemonicParsing="false" onAction="#editar"  text="Editar" />
+            <Button fx:id="remover" mnemonicParsing="false" onAction="#remover" text="Remover" />
+         </children>
+      </HBox>
+   </children>
+</VBox>

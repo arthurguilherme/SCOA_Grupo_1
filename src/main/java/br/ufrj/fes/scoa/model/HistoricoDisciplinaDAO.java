@@ -17,8 +17,7 @@ public class HistoricoDisciplinaDAO {
 			PreparedStatement ps = conexao.prepareStatement(query);
 			ResultSet rs = ps.executeQuery()) {
 			while (rs.next()) {
-				historicoDisciplinas.add(new HistoricoDisciplina(rs.getFloat("presenca"), 
-						rs.getInt("grau")));
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
