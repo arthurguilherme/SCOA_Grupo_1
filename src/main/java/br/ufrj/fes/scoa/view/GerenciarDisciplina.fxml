@@ -6,7 +6,12 @@
 <?import javafx.scene.layout.*?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrj.fes.scoa.controller.GerenciarDisciplinaController">
-   <children>
+   <children>   	
+   	<HBox alignment="CENTER" prefHeight="46.0" prefWidth="1013.0">
+         <children>
+            <TextField fx:id="filterField" prefHeight="25.0" prefWidth="624.0" />
+         </children>
+      </HBox>	
       <TableView fx:id="tabela" prefHeight="392.0" prefWidth="600.0">
         <columns>        
           <TableColumn fx:id="codCol" prefWidth="108.0" text="Código" />

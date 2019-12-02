@@ -9,9 +9,11 @@ import br.ufrj.fes.scoa.model.Aluno;
 import br.ufrj.fes.scoa.model.AlunoDAO;
 import br.ufrj.fes.scoa.model.Curso;
 import br.ufrj.fes.scoa.model.CursoDAO;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,41 +24,71 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class GerenciarCursoController implements Initializable {
 		@FXML
+		private TextField filterField;
+		@FXML
 	    private TableView<Curso> tabela;
 	    @FXML	
 	    private TableColumn<Curso, String> codCol;
 	    @FXML
-	    private TableColumn<Curso, String> nomeCol;
-	     
+	    private TableColumn<Curso, String> nomeCol;	     
 	    @FXML
-	    private Button editar;
-	    
+	    private Button editar;	    
 	    @FXML
 	    private Button remover;
+	
 	    
 	    private ObservableList<Curso> observableCurso;
+	    FilteredList<Curso> filteredData;
+	    
 	    
 	   	@Override
 		public void initialize(URL location, ResourceBundle resources) {
 			// TODO Auto-generated method stub
 	   		codCol.setCellValueFactory(new PropertyValueFactory<Curso, String>("codigo"));
 	   		nomeCol.setCellValueFactory(new PropertyValueFactory<Curso, String>("nome"));			
-			carregarListaDeCursos();		
+					
 			editar.disableProperty().bind(Bindings.isEmpty(tabela.getSelectionModel().getSelectedItems()));
 			remover.disableProperty().bind(Bindings.isEmpty(tabela.getSelectionModel().getSelectedItems()));
+			filterField.setPromptText("Filtrar resultados");	
+			carregarListaDeCursos();
+			Platform.runLater(() -> {
+				tabela.requestFocus();
+			    tabela.getSelectionModel().select(0);
+			    tabela.scrollTo(0);
+			});
+			
 		}
 		
 		private void carregarListaDeCursos() {
 			try {
-				observableCurso = FXCollections.observableArrayList();
+				observableCurso = FXCollections.observableArrayList();	
 				observableCurso.addAll(CursoDAO.getCursos());
-				tabela.setItems(observableCurso);
+				filteredData = new FilteredList<>(observableCurso, p -> true);
+		        
+				filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+		            filteredData.setPredicate(curso -> {
+		                if (newValue == null || newValue.isEmpty()) {
+		                    return true;
+		                }
+		                
+		                String lowerCaseFilter = newValue.toLowerCase();
+		                
+		                if (curso.getNome().toLowerCase().contains(lowerCaseFilter)) {
+		                    return true; // Filter matches first name.
+		                } else if (curso.getCodigo().toLowerCase().contains(lowerCaseFilter)) {
+		                    return true; // Filter matches last name.
+		                }
+		                return false; // Does not match.
+		            });
+		        });					
+				tabela.setItems(filteredData);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

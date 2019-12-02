@@ -9,9 +9,12 @@ import br.ufrj.fes.scoa.model.Curso;
 import br.ufrj.fes.scoa.model.CursoDAO;
 import br.ufrj.fes.scoa.model.Disciplina;
 import br.ufrj.fes.scoa.model.DisciplinaDAO;
+import br.ufrj.fes.scoa.model.Professor;
+import br.ufrj.fes.scoa.model.ProfessorDAO;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,11 +25,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class GerenciarDisciplinaController implements Initializable {
+	@FXML
+	private TextField filterField;
 	@FXML
     private TableView<Disciplina> tabela;
     @FXML	
@@ -44,7 +50,9 @@ public class GerenciarDisciplinaController implements Initializable {
     @FXML
     private Button remover;
     
+    
     private ObservableList<Disciplina> observableDisciplina;
+    FilteredList<Disciplina> filteredData;
     
     private Curso curso;
 
@@ -58,13 +66,32 @@ public class GerenciarDisciplinaController implements Initializable {
 			
 		editar.disableProperty().bind(Bindings.isEmpty(tabela.getSelectionModel().getSelectedItems()));
 		remover.disableProperty().bind(Bindings.isEmpty(tabela.getSelectionModel().getSelectedItems()));
+	
 	}
 	
-	private void carregarListaDeDisciplinas() {
+	private void carregarListaDeDisciplinas() {		
 		try {
-			observableDisciplina = FXCollections.observableArrayList();
+			observableDisciplina = FXCollections.observableArrayList();	
 			observableDisciplina.addAll(DisciplinaDAO.getDisciplinas(curso));
-			tabela.setItems(observableDisciplina);
+			filteredData = new FilteredList<>(observableDisciplina, p -> true);
+	        
+			filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+	            filteredData.setPredicate(disciplina -> {
+	                if (newValue == null || newValue.isEmpty()) {
+	                    return true;
+	                }
+	                
+	                String lowerCaseFilter = newValue.toLowerCase();
+	                
+	                if (disciplina.getNome().toLowerCase().contains(lowerCaseFilter)) {
+	                    return true; // Filter matches first name.
+	                } else if (disciplina.getCodigo().toLowerCase().contains(lowerCaseFilter)) {
+	                    return true; // Filter matches last name.
+	                }
+	                return false; // Does not match.
+	            });
+	        });					
+			tabela.setItems(filteredData);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

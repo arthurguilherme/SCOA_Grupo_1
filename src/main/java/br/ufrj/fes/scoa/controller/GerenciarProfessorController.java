@@ -8,11 +8,14 @@ import br.ufrj.fes.scoa.App;
 import br.ufrj.fes.scoa.model.Aluno;
 import br.ufrj.fes.scoa.model.AlunoDAO;
 import br.ufrj.fes.scoa.model.Curso;
+import br.ufrj.fes.scoa.model.CursoDAO;
 import br.ufrj.fes.scoa.model.Professor;
 import br.ufrj.fes.scoa.model.ProfessorDAO;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,11 +26,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class GerenciarProfessorController implements Initializable {
+	@FXML
+	private TextField filterField;
 	@FXML
     private TableView<Professor> tabela;
     @FXML	
@@ -44,6 +50,7 @@ public class GerenciarProfessorController implements Initializable {
     private Button remover;
     
     private ObservableList<Professor> observableProfessor;
+    FilteredList<Professor> filteredData;
     
     @Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -51,17 +58,41 @@ public class GerenciarProfessorController implements Initializable {
 		cpfCol.setCellValueFactory(new PropertyValueFactory<Professor, String>("cpf"));
 		rgCol.setCellValueFactory(new PropertyValueFactory<Professor, String>("rg"));
 		nomeCol.setCellValueFactory(new PropertyValueFactory<Professor, String>("nome"));
-		matriculaCol.setCellValueFactory(new PropertyValueFactory<Professor, Integer>("matricula"));		
-		carregarListaDeProfessors();		
+		matriculaCol.setCellValueFactory(new PropertyValueFactory<Professor, Integer>("matricula"));			
 		editar.disableProperty().bind(Bindings.isEmpty(tabela.getSelectionModel().getSelectedItems()));
 		remover.disableProperty().bind(Bindings.isEmpty(tabela.getSelectionModel().getSelectedItems()));
+		filterField.setPromptText("Filtrar resultados");	
+		carregarListaDeProfessors();	
+		Platform.runLater(() -> {
+			tabela.requestFocus();
+		    tabela.getSelectionModel().select(0);
+		    tabela.scrollTo(0);
+		});
 	}
 	
 	private void carregarListaDeProfessors() {
 		try {
-			observableProfessor = FXCollections.observableArrayList();
+			observableProfessor = FXCollections.observableArrayList();	
 			observableProfessor.addAll(ProfessorDAO.getProfessores());
-			tabela.setItems(observableProfessor);
+			filteredData = new FilteredList<>(observableProfessor, p -> true);
+	        
+			filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+	            filteredData.setPredicate(professor -> {
+	                if (newValue == null || newValue.isEmpty()) {
+	                    return true;
+	                }
+	                
+	                String lowerCaseFilter = newValue.toLowerCase();
+	                
+	                if (professor.getNome().toLowerCase().contains(lowerCaseFilter)) {
+	                    return true; // Filter matches first name.
+	                } else if (professor.getCpf().toLowerCase().contains(lowerCaseFilter)) {
+	                    return true; // Filter matches last name.
+	                }
+	                return false; // Does not match.
+	            });
+	        });					
+			tabela.setItems(filteredData);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
