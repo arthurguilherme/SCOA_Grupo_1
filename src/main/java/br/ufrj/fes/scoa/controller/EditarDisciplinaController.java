@@ -37,6 +37,8 @@ public class EditarDisciplinaController {
 		Disciplina disciplina = null;
 		try {					
 			disciplina = new Disciplina(codigo, nome);
+			disciplina.setCargaHoraria(Integer.parseInt(cargaF.getText()));
+			disciplina.setPeriodo(Integer.parseInt(periodoF.getText()));
 			DisciplinaDAO.atualizar(oldCodigo, disciplina);
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Atualizado com sucesso");
