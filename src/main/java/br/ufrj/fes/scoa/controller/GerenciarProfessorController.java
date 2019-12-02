@@ -5,10 +5,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import br.ufrj.fes.scoa.App;
-import br.ufrj.fes.scoa.model.Aluno;
-import br.ufrj.fes.scoa.model.AlunoDAO;
-import br.ufrj.fes.scoa.model.Curso;
-import br.ufrj.fes.scoa.model.CursoDAO;
 import br.ufrj.fes.scoa.model.Professor;
 import br.ufrj.fes.scoa.model.ProfessorDAO;
 import javafx.application.Platform;

@@ -6,6 +6,8 @@ import java.sql.SQLException;
 
 import br.ufrj.fes.scoa.ConexaoFactory;
 
+
+
 public class TurmaDAO {
 	public static void cadastrar(Turma turma) throws Exception {
 		String query = "INSERT INTO turma (codigo_disciplina, vagas, matricula_professor, qtd_aulas) VALUES(?, ?, ?, ?)";

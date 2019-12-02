@@ -9,6 +9,8 @@ import java.util.List;
 
 import br.ufrj.fes.scoa.ConexaoFactory;
 
+
+
 public class ProfessorDAO {
 	public static List<Professor> getProfessores() {
 		String query = "SELECT * FROM pessoa as p INNER JOIN professor as pr ON p.cpf = pr.cpf_pessoa";				

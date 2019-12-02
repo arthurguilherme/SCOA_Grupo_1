@@ -3,16 +3,14 @@ package br.ufrj.fes.scoa.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import br.ufrj.fes.scoa.model.Disciplina;
-import br.ufrj.fes.scoa.model.DisciplinaDAO;
 import br.ufrj.fes.scoa.model.Professor;
 import br.ufrj.fes.scoa.model.ProfessorDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class EditarProfessorController implements Initializable {

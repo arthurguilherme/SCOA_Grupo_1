@@ -6,11 +6,8 @@ import java.util.ResourceBundle;
 
 import br.ufrj.fes.scoa.App;
 import br.ufrj.fes.scoa.model.Curso;
-import br.ufrj.fes.scoa.model.CursoDAO;
 import br.ufrj.fes.scoa.model.Disciplina;
 import br.ufrj.fes.scoa.model.DisciplinaDAO;
-import br.ufrj.fes.scoa.model.Professor;
-import br.ufrj.fes.scoa.model.ProfessorDAO;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
