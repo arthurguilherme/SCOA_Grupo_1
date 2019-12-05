@@ -121,7 +121,7 @@ public class GerenciarCursoController implements Initializable {
 			Curso curso = tabela.getSelectionModel().getSelectedItem();
 			try {
 				CursoDAO.remover(curso);
-				tabela.getItems().remove(curso);
+				filteredData.getSource().remove(curso);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
@@ -25,6 +26,10 @@ public class EditarAlunoController implements Initializable {
 	private TextField cpf;
 	@FXML
 	private TextField rg;
+	@FXML
+	private TextField login;
+	@FXML
+	private PasswordField senha;
 	@FXML
 	private ChoiceBox<Curso> cursos;
 	
@@ -43,7 +48,9 @@ public class EditarAlunoController implements Initializable {
 		nome.setText(aluno.getNome());
 		cpf.setText(aluno.getCpf());
 		oldCpf = aluno.getCpf();
-		rg.setText(aluno.getRg());		
+		rg.setText(aluno.getRg());	
+		login.setText(aluno.getLogin());
+		//senha.setText(aluno.getSenha());
 		cursos.getSelectionModel().select(aluno.getCurso());
 	}
 	
@@ -54,8 +61,11 @@ public class EditarAlunoController implements Initializable {
 		String rgAluno = rg.getText();
 		Curso cursoAluno = cursos.getValue();
 		Aluno aluno;
+		System.out.println("aluno");
 		try {					
 			aluno = new Aluno(nomeAluno,cpfAluno, rgAluno, cursoAluno);
+			aluno.setLogin(login.getText());
+			aluno.setSenha(senha.getText());
 			AlunoDAO.atualizar(oldCpf, aluno);
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Atualizado com sucesso");

@@ -19,7 +19,7 @@ import javafx.scene.layout.AnchorPane;
 public class LoginController extends AnchorPane implements Initializable {
 
     @FXML
-    TextField userId;
+    TextField user;
     @FXML
     PasswordField password;
     @FXML
@@ -41,7 +41,7 @@ public class LoginController extends AnchorPane implements Initializable {
     @FXML 
     public void fazerLogin(ActionEvent event) {
     	// TODO Verificar login
-    	application.logar(userId.getText(), password.getText());
+    	application.logar(user.getText(), password.getText());
     }    
    
 }

@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.PasswordField;
 import javafx.event.ActionEvent;
 
 public class CadastrarAlunoController implements Initializable {
@@ -21,6 +22,8 @@ public class CadastrarAlunoController implements Initializable {
 	@FXML TextField nome;
 	@FXML TextField cpf;
 	@FXML TextField rg;
+	@FXML TextField login;
+	@FXML PasswordField senha;
 	@FXML ChoiceBox<Curso> cursos;
 	
 	@Override
@@ -39,6 +42,8 @@ public class CadastrarAlunoController implements Initializable {
 		Aluno aluno;
 		try {					
 			aluno = new Aluno(nomeAluno,cpfAluno, rgAluno, cursoAluno);
+			aluno.setLogin(login.getText());
+			aluno.setSenha(senha.getText());
 			AlunoDAO.cadastrar(aluno);
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Cadastrado com sucesso");

@@ -8,12 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ufrj.fes.scoa.ConexaoFactory;
+import br.ufrj.fes.scoa.util.CryptoUtils;
+import br.ufrj.fes.scoa.util.StringUtils;
 
 
 
 public class ProfessorDAO {
 	public static List<Professor> getProfessores() {
-		String query = "SELECT * FROM pessoa as p INNER JOIN professor as pr ON p.cpf = pr.cpf_pessoa";				
+		String query = "SELECT * FROM pessoa as p INNER JOIN professor as pr ON p.cpf = pr.cpf_pessoa ORDER BY pr.matricula";				
 		List<Professor> professores = new ArrayList<>();
 		try (Connection conexao = ConexaoFactory.criarConexao();
 			PreparedStatement ps = conexao.prepareStatement(query);
@@ -32,16 +34,36 @@ public class ProfessorDAO {
 	}
 	
 	public static void atualizar(String oldCpf, Professor prof) throws Exception {
-		String query = "UPDATE pessoa SET cpf = ?, nome = ?, rg = ? WHERE cpf = ?";		
-		PreparedStatement ps2 = null;
-		try (Connection conexao = ConexaoFactory.criarConexao();
-			PreparedStatement ps = conexao.prepareStatement(query)) {
+		PreparedStatement ps = null;		
+		try (Connection conexao = ConexaoFactory.criarConexao()) {				
+			if (StringUtils.isNullOrEmpty(prof.getLogin()) || StringUtils.isNullOrEmpty(prof.getSenha())) {
+				String query = "UPDATE pessoa SET cpf = ?, nome = ?, rg = ? WHERE cpf = ?";
+				System.out.println("Update 1");
+				ps = conexao.prepareStatement(query);
 				ps.setString(1, prof.getCpf());
 				ps.setString(2, prof.getNome());
 				ps.setString(3, prof.getRg());
 				ps.setString(4, oldCpf);
-				ps.execute();				
+			} else {
+				String query = "UPDATE pessoa SET cpf = ?, nome = ?, rg = ?, login = ?, senha = ? WHERE cpf = ?";
+				System.out.println("Update 2");
+				ps = conexao.prepareStatement(query);
+				ps.setString(1, prof.getCpf());
+				ps.setString(2, prof.getNome());
+				ps.setString(3, prof.getRg());
+				ps.setString(4, prof.getLogin());
+				ps.setString(5, CryptoUtils.sha256(prof.getSenha()));
+				ps.setString(6, oldCpf);					
 			}
+			ps.execute();
+	
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (Exception e) {}
+			}			
+		}
 	}
 	
 	public static void remover(Professor professor) throws Exception {
@@ -69,10 +91,13 @@ public class ProfessorDAO {
 				throw new Exception("Professor já cadastrado!");
 			}
 			
-			ps2 = conexao.prepareStatement("INSERT INTO pessoa (cpf, rg, nome) VALUES (?, ?, ?)");
+			ps2 = conexao.prepareStatement("INSERT INTO pessoa (cpf, rg, nome, login, senha, perfil) VALUES (?, ?, ?, ?, ?, ?)");
 			ps2.setString(1, prof.getCpf());
 			ps2.setString(2, prof.getRg());
-			ps2.setString(3, prof.getNome());
+			ps2.setString(3, prof.getNome());	
+			ps2.setString(4,  prof.getLogin());
+			ps2.setString(5,  CryptoUtils.sha256(prof.getSenha()));
+			ps2.setInt(6,  PessoaDAO.PROFESSOR);
 			ps2.execute();
 		
 			 

@@ -6,6 +6,8 @@ public class Pessoa {
 	private String cpf;
 	private String rg;
 	private String nome;
+	private String login;
+	private String senha;
 	
 	// TODO verificar cpf
 	public Pessoa(String nome, String cpf, String rg) throws Exception {
@@ -30,6 +32,30 @@ public class Pessoa {
 
 	public String getNome() {
 		return nome;
+	}
+	
+	public String getLogin() {
+		return login;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setLogin(String login) {
+		if (StringUtils.isNullOrEmpty(login)) {
+			this.login = null;
+		} else {
+			this.login = login;
+		}
+	}
+	
+	public void setSenha(String senha) {
+		if (StringUtils.isNullOrEmpty(senha)) {
+			this.senha = null;
+		} else {
+			this.senha = senha;
+		}
 	}
 	
 

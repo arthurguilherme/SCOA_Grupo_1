@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import br.ufrj.fes.scoa.App;
+import br.ufrj.fes.scoa.IApp;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -16,10 +17,11 @@ import javafx.stage.Stage;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
-public class AdminController extends AnchorPane implements Initializable {
+public class AdminController implements Initializable, IApp {
 	
 	private App application;    
     
+	@Override
     public void setApp(App application){
         this.application = application;
     }    

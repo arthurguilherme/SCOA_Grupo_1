@@ -96,6 +96,8 @@ public class GerenciarAlunoController implements Initializable {
 	                    return true; // Filter matches first name.
 	                } else if (aluno.getCpf().toLowerCase().contains(lowerCaseFilter)) {
 	                    return true; // Filter matches last name.
+	                } else if (aluno.getRg().toLowerCase().contains(lowerCaseFilter)) {
+	                	return true;
 	                }
 	                return false; // Does not match.
 	            });
@@ -133,7 +135,7 @@ public class GerenciarAlunoController implements Initializable {
 		Aluno aluno = tabela.getSelectionModel().getSelectedItem();
 		try {
 			AlunoDAO.remover(aluno);
-			tabela.getItems().remove(aluno);
+			filteredData.getSource().remove(aluno);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

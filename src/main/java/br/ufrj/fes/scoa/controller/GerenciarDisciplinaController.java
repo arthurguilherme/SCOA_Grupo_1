@@ -128,7 +128,7 @@ public class GerenciarDisciplinaController implements Initializable {
 		Disciplina disciplina = tabela.getSelectionModel().getSelectedItem();
 		try {
 			DisciplinaDAO.remover(disciplina);
-			tabela.getItems().remove(disciplina);
+			filteredData.getSource().remove(disciplina);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

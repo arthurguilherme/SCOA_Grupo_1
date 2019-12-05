@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" styleClass="background" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrj.fes.scoa.controller.CadastrarAlunoController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" styleClass="background" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrj.fes.scoa.controller.CadastrarProfessorController">
    <children>
       <GridPane layoutX="69.0" layoutY="164.0">
         <columnConstraints>
@@ -24,6 +24,7 @@
           <RowConstraints maxHeight="125.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="152.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="152.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="152.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label alignment="CENTER" prefHeight="16.0" prefWidth="98.0" text="Nome" />
@@ -31,9 +32,11 @@
             <Label alignment="CENTER" prefHeight="16.0" prefWidth="98.0" text="CPF" GridPane.rowIndex="1" />
             <TextField fx:id="nome" GridPane.columnIndex="1" />
             <TextField id="cpf" fx:id="cpf" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label alignment="CENTER" prefHeight="16.0" prefWidth="101.0" text="Telefone" GridPane.rowIndex="3" />
+            <Label alignment="CENTER" prefHeight="16.0" prefWidth="101.0" text="Login" GridPane.rowIndex="3" />
             <TextField id="rg" fx:id="rg" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField id="rg" fx:id="rg1" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField id="rg" fx:id="login" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="senh" alignment="CENTER" prefHeight="17.0" prefWidth="85.0" text="Senha" GridPane.rowIndex="4" />
+            <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
       <Button layoutX="187.0" layoutY="345.0" mnemonicParsing="false" onAction="#cadastrar" prefHeight="26.0" prefWidth="114.0" text="Cadastrar" />      

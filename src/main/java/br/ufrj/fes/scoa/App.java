@@ -7,6 +7,8 @@ import java.util.logging.Logger;
 
 import br.ufrj.fes.scoa.controller.AdminController;
 import br.ufrj.fes.scoa.controller.LoginController;
+import br.ufrj.fes.scoa.model.PessoaDAO;
+import br.ufrj.fes.scoa.util.StringUtils;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,6 +17,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
+
+import static br.ufrj.fes.scoa.model.PessoaDAO.*;
 
 public class App extends Application {
 
@@ -37,12 +42,43 @@ public class App extends Application {
     }
 
         
-    public boolean logar(String userId, String password) {
-		abrirPainelAdmin();
-		return true;
+    public void logar(String usuario, String senha) {
+    	int perfil = NAO_REGISTRADO;
+    	if (!StringUtils.isNullOrEmpty(usuario) && !StringUtils.isNullOrEmpty(senha)) {
+    		perfil = PessoaDAO.login(usuario, senha);
+    	} 
+    	
+		switch (perfil) {
+			case ALUNO:
+				abrirPainel("/Aluno.fxml");
+				break;
+			case PROFESSOR:
+				abrirPainel("/Professor.fxml");
+				break;
+			case ADMIN:
+				abrirPainel("/Admin.fxml");
+				break;
+			default:
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Login incorreto");
+				alert.setHeaderText(null);
+				alert.setContentText("Verifique usuário e senha");
+				alert.showAndWait();
+		}
     }
     
-    public void deslogar() {
+    private void abrirPainel(String painel) {
+    	 try {
+    		 IApp app = (IApp) replaceSceneContent(painel);
+             app.setApp(this);
+            
+         } catch (Exception ex) {
+             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+         }
+		
+	}
+
+	public void deslogar() {
     	abrirPainelLogin();
     }
     
@@ -56,16 +92,6 @@ public class App extends Application {
 			alert.setContentText("Verifique conexão com o BD");
 			alert.showAndWait();
     	}
-    }
-    
-    private void abrirPainelAdmin() {    
-        try {
-        	AdminController admin = (AdminController) replaceSceneContent("/Admin.fxml");
-            admin.setApp(this);
-           
-        } catch (Exception ex) {
-            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     private void abrirPainelLogin() {

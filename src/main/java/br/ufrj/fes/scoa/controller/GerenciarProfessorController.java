@@ -84,6 +84,8 @@ public class GerenciarProfessorController implements Initializable {
 	                    return true; // Filter matches first name.
 	                } else if (professor.getCpf().toLowerCase().contains(lowerCaseFilter)) {
 	                    return true; // Filter matches last name.
+	                } else if (professor.getRg().toLowerCase().contains(lowerCaseFilter)) {
+	                	return true;
 	                }
 	                return false; // Does not match.
 	            });
@@ -102,7 +104,7 @@ public class GerenciarProfessorController implements Initializable {
 			FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/EditarProfessor.fxml"));
 			Parent root = fxmlLoader.load();
 			stage.setScene(new Scene(root));
-		    stage.setTitle("Editar Aluno");
+		    stage.setTitle("Editar Professor");
 		    stage.initModality(Modality.WINDOW_MODAL);
 		    stage.initOwner(
 		        ((Node)event.getSource()).getScene().getWindow() );
@@ -121,7 +123,7 @@ public class GerenciarProfessorController implements Initializable {
 		Professor professor = tabela.getSelectionModel().getSelectedItem();
 		try {
 			ProfessorDAO.remover(professor);
-			tabela.getItems().remove(professor);
+			filteredData.getSource().remove(professor);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -135,7 +137,7 @@ public class GerenciarProfessorController implements Initializable {
 			Parent root = FXMLLoader.load(
 			    App.class.getResource("/CadastrarProfessor.fxml"));
 			stage.setScene(new Scene(root));
-		    stage.setTitle("Adicionar Aluno");
+		    stage.setTitle("Adicionar Professor");
 		    stage.initModality(Modality.WINDOW_MODAL);
 		    stage.initOwner(
 		        ((Node)event.getSource()).getScene().getWindow() );
